@@ -32,10 +32,8 @@ def consultar_paciente(id: int):
 @app.post("/citas")
 def crear_cita(cita: Cita):
 
-    r = requests.get(f"http://localhost:8002/pacientes/{cita.paciente_id}")
-
-    if r.status_code != 200:
-        raise HTTPException(status_code=404, detail="Paciente no existe")
+    if not crud.validar_paciente(cita.paciente_id):
+        raise HTTPException(status_code=404, detail="Paciente no encontrado")
 
     return crud.crear_cita(
         cita.paciente_id,

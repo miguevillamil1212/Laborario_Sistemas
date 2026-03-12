@@ -63,3 +63,17 @@ def cancelar_cita(id):
     conn.commit()
 
     return {"mensaje": "Cita cancelada"}
+
+def validar_paciente(id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = "SELECT 1 FROM pacientes WHERE id = %s"
+    cursor.execute(sql, (id,))
+
+    existe = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return existe is not None
