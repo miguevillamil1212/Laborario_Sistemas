@@ -10,6 +10,146 @@ El sistema fue desarrollado utilizando el framework **FastAPI** y una base de da
 
 ---
 
+# Documentación
+
+**IP:** `172.16.0.134` | **Puerto:** `8003` | **URL base:** `http://172.16.0.134:8003`
+
+---
+
+## 1. Registrar Paciente
+
+**Endpoint:** `POST /pacientes`
+
+**Parámetros (body JSON):**
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| nombre | string | Nombre completo del paciente |
+| documento | string | Número de documento |
+
+**Ejemplo request:**
+```json
+{
+  "nombre": "Juan Perez",
+  "documento": "123456789"
+}
+```
+
+**Ejemplo response:**
+```json
+{
+  "mensaje": "Paciente registrado"
+}
+```
+
+---
+
+## 2. Consultar Paciente
+
+**Endpoint:** `GET /pacientes/{id}`
+
+**Parámetros (URL):**
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | int | ID del paciente |
+
+**Ejemplo request:**
+```
+GET http://172.16.0.134:8003/pacientes/1
+```
+
+**Ejemplo response:**
+```json
+{
+  "id": 1,
+  "nombre": "Juan Perez",
+  "documento": "123456789"
+}
+```
+
+---
+
+## 3. Crear Cita
+
+**Endpoint:** `POST /citas`
+
+**Parámetros (body JSON):**
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| paciente_id | int | ID del paciente |
+| fecha | string | Fecha y hora de la cita (YYYY-MM-DD HH:MM) |
+
+**Ejemplo request:**
+```json
+{
+  "paciente_id": 1,
+  "fecha": "2026-04-01 10:00"
+}
+```
+
+**Ejemplo response:**
+```json
+{
+  "mensaje": "Cita creada"
+}
+```
+
+---
+
+## 4. Consultar Citas
+
+**Endpoint:** `GET /citas/{paciente_id}`
+
+**Parámetros (URL):**
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| paciente_id | int | ID del paciente |
+
+**Ejemplo request:**
+```
+GET http://172.16.0.134:8003/citas/1
+```
+
+**Ejemplo response:**
+```json
+[
+  {
+    "id": 1,
+    "paciente_id": 1,
+    "fecha": "2026-04-01 10:00:00",
+    "estado": "activa"
+  }
+]
+```
+
+---
+
+## 5. Cancelar Cita
+
+**Endpoint:** `DELETE /citas/{id}`
+
+**Parámetros (URL):**
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| id | int | ID de la cita |
+
+**Ejemplo request:**
+```
+DELETE http://172.16.0.134:8003/citas/1
+```
+
+**Ejemplo response:**
+```json
+{
+  "mensaje": "Cita cancelada"
+}
+```
+
+---
+
+## Documentación interactiva
+
+Swagger UI disponible en: `http://172.16.0.134:8003/docs`
+
 # Arquitectura del Sistema
 
 El sistema sigue una arquitectura basada en microservicios donde cada componente realiza una función específica.
